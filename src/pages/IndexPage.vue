@@ -1,49 +1,59 @@
 <template>
-  <q-layout view="hHh lpR lFr">
+  <q-page class="column flex-center">
+    <q-knob
+      v-model="count"
+      :min="min"
+      :max="max"
+      size="80px"
+      show-value
+      :thickness="0.13"
+      color="primary"
+      track-color="dark"
+    >
+      <q-avatar size="75px">
+        <img alt="Quasar logo" src="~assets/quasar-logo-inner.svg" />
+      </q-avatar>
+    </q-knob>
 
-    <q-header elevated class="bg-primary text-white" height-hint="98">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+    <img
+      alt="Quasar logo"
+      src="~assets/quasar-logo-vertical.svg"
+      style="width: 200px; height: 140px"
+    />
 
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          Help
-        </q-toolbar-title>
-      </q-toolbar>
+    <div class="q-mt-xl">
+      <q-btn
+        color="primary"
+        dense
+        round
+        label="-"
+        :disable="count === min"
+        @click="count--"
+      />
 
-      <q-tabs align="left">
-        <q-route-tab to="/page1" label="Page One" />
-        <q-route-tab to="/page2" label="Page Two" />
-        <q-route-tab to="/page3" label="Page Three" />
-      </q-tabs>
-    </q-header>
+      <span class="q-mx-md text-bold">{{ count }}</span>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-      <!-- drawer content -->
-    </q-drawer>
+      <q-btn
+        color="primary"
+        dense
+        round
+        label="+"
+        :disable="count === max"
+        @click="count++"
+      />
+    </div>
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-
-  </q-layout>
+    <div class="q-mt-md" style="width: 200px">
+      <q-slider v-model="count" :min="min" :max="max" />
+    </div>
+  </q-page>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { ref } from 'vue';
 
-export default {
-  setup () {
-    const leftDrawerOpen = ref(false)
+const count = ref(0);
 
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-}
+const min = -5;
+const max = 5;
 </script>
